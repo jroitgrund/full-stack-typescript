@@ -1,0 +1,111 @@
+{
+  "name": "",
+  "description": "",
+  "repository": "https://github.com/jroitgrund/",
+  "author": "Jonathan Roitgrund <jroitgrund@gmail.com>",
+  "license": "MIT",
+  "easySauce": {
+    "port": "8080",
+    "testPath": "/web/saucelabs/index.html",
+    "framework": "mocha",
+    "platforms": [
+      [
+        "Windows 7",
+        "internet explorer",
+        "latest"
+      ],
+      [
+        "Linux",
+        "firefox",
+        "latest"
+      ],
+      [
+        "OS X 10.8",
+        "safari",
+        "6.0"
+      ]
+    ],
+    "service": "ngrok",
+    "serviceOptions": {
+      "verbose": true
+    }
+  },
+  "scripts": {
+    "test": "npm-run-all -p eslint tslint clean -s tsc packtest easy-sauce",
+    "easy-sauce": "easy-sauce",
+    "packtest": "webpack --config web/webpack.config.test.js",
+    "mocha": "mocha --require ignore-styles build/web/test --recursive",
+    "eslint": "eslint web/*.js",
+    "tslint": "tslint -p tsconfig.json",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w",
+    "mocha:watch": "mocha --require ignore-styles --require source-map-support/register build/web/test --recursive --watch",
+    "clean": "rimraf build && rimraf web/dist",
+    "test:watch": "npm-run-all clean tsc -p tsc:watch mocha:watch",
+    "server": "node build/server/src/app.js",
+    "server-dev": "DEBUG=server nodemon --watch build/server/src build/server/src/app.js",
+    "web-dev": "webpack-dev-server --config web/webpack.config.js",
+    "dev": "npm-run-all tsc -p tsc:watch server-dev web-dev",
+    "dist": "npm-run-all clean dist:build",
+    "dist:build": "NODE_ENV=production webpack -p --config web/webpack.config.js",
+    "run-dist": "npm-run-all -p tsc dist -s server"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.5.0",
+    "@types/debug": "^0.0.29",
+    "@types/enzyme": "^2.8.0",
+    "@types/express": "^4.0.35",
+    "@types/mocha": "^2.2.40",
+    "@types/morgan": "^1.7.32",
+    "@types/node": "^7.0.18",
+    "@types/react": "^15.0.23",
+    "@types/react-dom": "^15.5.0",
+    "@types/react-hot-loader": "^3.0.1",
+    "@types/sinon": "^2.1.2",
+    "@types/source-map-support": "^0.2.28",
+    "awesome-typescript-loader": "^3.1.2",
+    "chai": "^3.5.0",
+    "css-loader": "^0.28.0",
+    "debug": "^2.6.6",
+    "enzyme": "^2.8.2",
+    "es6-shim": "^0.35.3",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "express": "^4.15.2",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "glob": "^7.1.1",
+    "html-webpack-harddisk-plugin": "^0.1.0",
+    "html-webpack-plugin": "^2.28.0",
+    "ignore-styles": "^5.0.1",
+    "mocha": "^3.2.0",
+    "mocha-junit-reporter": "^1.13.0",
+    "morgan": "^1.8.1",
+    "node-sass": "^4.5.2",
+    "nodemon": "^1.11.0",
+    "normalize-css": "^2.3.1",
+    "npm-run-all": "^4.0.2",
+    "postcss-loader": "^1.3.3",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "next",
+    "react-test-renderer": "^15.5.4",
+    "rimraf": "^2.6.1",
+    "sass-loader": "^6.0.3",
+    "sauce-connect-launcher": "^1.2.2",
+    "sinon": "^2.1.0",
+    "source-map-loader": "^0.2.1",
+    "source-map-support": "^0.4.14",
+    "style-loader": "^0.16.1",
+    "testling": "^1.7.1",
+    "tsc": "^1.20150623.0",
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.7.7",
+    "easy-sauce": "^0.4.1"
+  }
+}
